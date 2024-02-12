@@ -1,5 +1,6 @@
 const rootElement = document.getElementById('root')
 const root = ReactDOM.createRoot(rootElement);
+
 //import не работает через cdn поэтому пишу в одном файле
 
 class Vitek extends React.Component {
@@ -7,7 +8,9 @@ class Vitek extends React.Component {
         super(props);
         this.state = {
             value: '',
-            intervalId: null
+            intervalId: null,
+            currentTemp: '',
+            status: ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.switchOn = this.switchOn.bind(this)
@@ -49,12 +52,18 @@ class Vitek extends React.Component {
             let current = 0;
 
             const newIntervalId = setInterval(() => {
-                console.log(temperature * current + '°C'); // вывела в консоль для удобства просмотра
+                // вывела html для удобства просмотра
+                const currentTemp = temperature * current
+
+                this.setState({currentTemp})
+                console.log(currentTemp);
                 current++;
 
-                if (current === boilingTime) {
+                if (currentTemp === maxTemperature) {
                     clearInterval(newIntervalId);
-                    alert('Вода закипела');
+                    const status = 'Вода закипела'
+
+                    this.setState({status});
                 }
 
             }, 1000);
@@ -69,7 +78,9 @@ class Vitek extends React.Component {
         if (intervalId) {
             clearInterval(intervalId);
             this.setState({intervalId: null});
-            alert('Чайник остановлен');
+            const status = 'Остановка программы'
+            this.setState({status});
+
         }
     };
 
@@ -89,6 +100,17 @@ class Vitek extends React.Component {
                 <div className='buttons'>
                     <button onClick={this.switchOn}>Включить</button>
                     <button onClick={this.stopProgram}>Выключить</button>
+                </div>
+                <div className='temp'>
+                    <h3> Датчик температуры °C</h3>
+                    <p>
+                        {this.state.currentTemp}
+                    </p>
+                    <p>
+                        {this.state.status}
+                    </p>
+
+
                 </div>
 
             </div>);
