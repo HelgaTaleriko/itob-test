@@ -1,0 +1,28 @@
+h1{
+    text-align: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+.wrapper-main{
+    display: flex;
+    justify-content: center;
+}
+img{
+    width: 30vw;
+}
+.wrapper-right{
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+}
+
+
+
+
+
+
+
+
+
